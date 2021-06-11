@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>lesson</title>
+  <script src="https://unpkg.com/vue@next"></script>
+</head>
+
+<body>
+  <div id="root"></div>
+
+  <script>
+    // event, $event
+    // 事件修饰符：stop, prevent, capture, self, once, passive
+    // 按键修饰符：enter, tab, delete, esc, up, down, left, right
+    // 鼠标修饰符：left, right, middle
+    // 精确修饰符：exact
+    Vue.createApp({
+      data() {
+        return {
+          counter: 1,
+          inputVal: ''
+        }
+      },
+      methods: {
+        handleClick1() {
+          alert('1')
+        },
+        handleClick2() {
+          alert('2')
+        },
+        handleClick3(num) {
+          this.counter += num
+        },
+        handleKeyDown(inputVal) {
+          this.inputVal = inputVal;
+          this.inputVal = ''
+        }
+      },
+      template: `
+      <div>
+        <div @click.self="handleClick1(),handleClick2()">
+          {{counter}}self只有点当前标签才有用 stop防止冒泡 prevent & capture 捕获 & once 直执行一次
+          <button @click.stop="handleClick3(2)">add</button>  
+        </div>
+      </div>
+      <div>
+        <input @keydown.enter="handleKeyDown" v-model='inputVal'/>
+        <div>{{inputVal}}</div>
+      </div>
+      
+      `
+
+    }).mount('#root')
+  </script>
+</body>
+
+</html>

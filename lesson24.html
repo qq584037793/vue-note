@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>lesson</title>
+  <script src="https://unpkg.com/vue@next"></script>
+  <style>
+    .header {
+      position: absolute;
+    }
+  </style>
+</head>
+
+<body>
+  <div id="root"></div>
+
+  <script>
+    // computed
+    const {
+      computed
+    } = Vue
+    const app = Vue.createApp({
+      setup() {
+        const {
+          ref,
+          computed
+        } = Vue;
+        const num = ref(0)
+        const numAdd = computed({
+          get: () => {
+            return num.value + 1
+          },
+          set: (params) => {
+            num.value = params - 5
+          },
+        })
+        setTimeout(() => {
+          numAdd.value = 100
+        }, 1000);
+        return {
+          num,
+          numAdd
+        }
+      },
+
+      template: `
+      <div>
+        {{num}}--{{numAdd}}
+      </div>`
+
+    });
+
+
+    app.mount('#root')
+  </script>
+</body>
+
+</html>

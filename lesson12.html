@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>lesson</title>
+  <script src="https://unpkg.com/vue@next"></script>
+</head>
+
+<body>
+  <div id="root"></div>
+
+  <script>
+    // 动态组件
+    // 异步组件(hard)
+    const app = Vue.createApp({
+      data() {
+        return {
+          currentItem: "layout"
+        }
+      },
+      methods: {
+        handleSwitch() {
+          this.currentItem === "layout" ? this.currentItem = "scope" : this.currentItem = "layout"
+        }
+      },
+      template: `
+      <keep-alive>
+        <component :is='currentItem'/>
+      </keep-alive>
+      <button @click='handleSwitch'>switch</button>
+      <async-common/>
+      `
+    });
+
+    app.component('layout', {
+      template: `
+      <div>
+       <div>content</div>
+      </div>
+      `
+    });
+    app.component('scope', {
+      template: `
+      <div>
+       <input/>
+       <button>submit</button>
+      </div>
+      `
+    });
+    app.component('async-common', Vue.defineAsyncComponent(() => {
+      return new Promise((res, rej) => {
+        setInterval(() => {
+          res({
+            template: `
+          <div>
+              async-common
+          </div>`
+          })
+        }, 1000)
+      })
+    }));
+
+    app.mount('#root')
+  </script>
+</body>
+
+</html>

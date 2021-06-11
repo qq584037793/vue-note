@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>lesson</title>
+  <script src="https://unpkg.com/vue@next"></script>
+  <style>
+  </style>
+</head>
+
+<body>
+  <div id="root"></div>
+
+  <script>
+    // vue 3.0 toDoList  组件化
+    const handleListInput = () => {
+      const {
+        ref
+      } = Vue
+      const inputVal = ref('')
+      const handleInput = (e) => {
+        inputVal.value = e.target.value
+      }
+      return {
+        inputVal,
+        handleInput
+      }
+    }
+
+    const handleClickAdd = () => {
+      const {
+        reactive
+      } = Vue;
+      const list = reactive([])
+      const handleAdd = (item) => {
+        list.push(item)
+        item = ''
+      }
+      return {
+        list,
+        handleAdd
+      }
+    }
+    const app = Vue.createApp({
+      setup() {
+
+        const {
+          inputVal,
+          handleInput
+        } = handleListInput()
+        const {
+          list,
+          handleAdd
+        } = handleClickAdd()
+
+        return {
+          inputVal,
+          handleInput,
+          handleAdd,
+          list
+        }
+      },
+      template: `
+      <div>
+        <input @input='handleInput' :value='inputVal'/>
+        <button @click="()=>handleAdd(inputVal)">add</button>
+        <ul>
+         <li v-for='(item,index) in list' :key='index'>{{item}}</li>
+        </ul>
+      </div>`
+    });
+
+
+    app.mount('#root')
+  </script>
+</body>
+
+</html>

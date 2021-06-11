@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>lesson</title>
+  <script src="https://unpkg.com/vue@next"></script>
+</head>
+
+<body>
+  <div id="root"></div>
+
+  <script>
+    // 列表循环
+    Vue.createApp({
+      data() {
+        return {
+          array: ['name', 'age', 'sex'],
+          obj: {
+            name: 'tony',
+            age: 12,
+            sex: 'male'
+          }
+        }
+      },
+      methods: {
+        handleAddBtnClick() {
+          // 1. 使用数组的变更函数 push, pop, shift, unshift, splice, sort, reverse
+          // this.listArray.push('hello');
+          // this.listArray.pop();
+          // this.listArray.shift();
+          // this.listArray.unshift('hello');
+          // this.listArray.reverse();
+
+          // 2. 直接替换数组
+          // this.listArray = ['bye', 'world']
+          // this.listArray = ['bye', 'wolrd'].filter(item => item === 'bye');
+
+          // 3. 直接更新数组的内容
+          // this.listArray[1] = 'hello'
+
+          // 直接添加对象的内容，也可以自动的展示出来
+          // this.listObject.age = 100;
+          // this.listObject.sex = 'male';
+        }
+      },
+      template: `
+      <div v-for="(item,index) of array" :key="index">{{index}}--{{item}}</div>
+      <template v-for="(value,key,index) of obj" :key="index">
+        <div v-if="key!=='age'">
+        {{index}}--{{key}}--{{value}}
+        </div>
+      </template>
+      <button @click="handleAddBtnClick">新增</button>
+      `
+    }).mount('#root')
+  </script>
+</body>
+
+</html>

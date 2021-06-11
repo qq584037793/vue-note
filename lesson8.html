@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>lesson</title>
+  <script src="https://unpkg.com/vue@next"></script>
+</head>
+
+<body>
+  <div id="root"></div>
+
+  <script>
+    // 单项数据流 子组件可以使用父组件传的数据，但无法修改
+    // No-props 属性 子组件无props(主要用于修改样式)
+    const app = Vue.createApp({
+      data() {
+        return {
+          num: 123
+        }
+      },
+      template: `
+      <div><test :content='num'/></div>`
+
+    });
+    // 表单验证 一般子组件设置要传参数的类型，然后父组件传参数
+    // required 必填
+    // default 默认
+    // validator 设置限制
+    // inheritAttrs:false 字组件不接受No-prop
+    // v-bind="$attrs" 指定div接受No-prop
+    app.component('test', {
+      props: {
+        content: {
+          type: Number,
+          required: true,
+          validator: function (value) {
+            return value < 1000
+          },
+          default: 456
+        }
+      },
+      template: `
+      <div>{{content}}</div>`
+    })
+
+
+
+
+    app.mount('#root')
+  </script>
+</body>
+
+</html>

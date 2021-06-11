@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>lesson</title>
+  <script src="https://unpkg.com/vue@next"></script>
+</head>
+
+<body>
+  <div id="root"></div>
+
+  <script>
+    // 触发用驼峰，监听用 -
+    const app = Vue.createApp({
+      data() {
+        return {
+          num: 123
+        }
+      },
+      methods: {
+        handleAdd(params) {
+          this.num += params
+        }
+      },
+      template: `
+      <div><test :content='num' @add='handleAdd'/></div>`
+
+    });
+    // 一般单项数据流 子组件可以使用父组件传的数据，无法修改 
+    // 但是子组件派发一个emit，父组件在接受就可以让子修改父
+    app.component('test', {
+      props: ['content'],
+      emits: {
+        add: (count) => {
+          if (count > 0) {
+            return true
+          } else {
+            return false
+          }
+        }
+      },
+      methods: {
+        handleClick() {
+          this.$emit('add', 2)
+        }
+      },
+      template: `
+      <div @click="handleClick">{{content}}</div>`
+    })
+
+
+
+
+    app.mount('#root')
+  </script>
+</body>
+
+</html>

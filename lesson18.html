@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>lesson</title>
+  <script src="https://unpkg.com/vue@next"></script>
+  <style>
+    .box {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      width: 100px;
+      height: 100px;
+      background: #000;
+      z-index: 2;
+    }
+
+    .mask {
+      position: absolute;
+      top: 0;
+      left: 0;
+      bottom: 0;
+      right: 0;
+      background-color: red;
+      opacity: 0.5;
+      z-index: 1;
+    }
+  </style>
+</head>
+
+<body>
+  <div id="root"></div>
+
+  <script>
+    // teleport
+    const app = Vue.createApp({
+      data() {
+        return {
+          show: false
+        }
+      },
+      template: `
+      <div class='box'>
+        <button @click='this.show = !this.show'>change</button>
+        <teleport to="body">
+          <div v-show="show"  class='mask'></div>
+        </teleport>
+      </div>`
+
+    });
+
+
+    app.mount('#root')
+  </script>
+</body>
+
+</html>

@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>lesson</title>
+  <script src="https://unpkg.com/vue@next"></script>
+  <style>
+    /* @keyframes bounce-in {
+      0% {
+        transform: scale(0);
+      }
+
+      50% {
+        transform: scale(1.5);
+      }
+
+      100% {
+        transform: scale(1);
+      }
+    }
+
+    .bounce-enter-active {
+      animation: bounce-in .5s;
+    }
+
+    .bounce-leave-active {
+      animation: bounce-in .5s reverse;
+    }
+
+    .slide-enter-active,
+    .slide-leave-active {
+      transition: all 0.3s
+    }
+
+    .slide-enter-from,
+    .slide-leave-to {
+      transform: translate3d(100%, 0, 0)
+    } */
+  </style>
+</head>
+
+<body>
+  <div id="root"></div>
+
+  <script>
+    // https://cn.vuejs.org/v2/guide/transitions.html
+    // 单元素组件过度动画
+    Vue.createApp({
+      data() {
+        return {
+          show: false
+        }
+      },
+      methods: {
+        handleClick() {
+          this.show = !this.show
+        },
+        handleEnter(el) {
+          el.style.color = "red"
+        },
+        handleActive(el, done) {
+          const timer = setInterval(() => {
+            const color = el.style.color
+            color === "red" ? el.style.color = "green" : el.style.color = "red"
+          }, 1000)
+          setTimeout(() => {
+            clearInterval(timer)
+            done()
+          }, 3000)
+        },
+        handleAfter() {
+          alert('done')
+        },
+
+      },
+      template: `
+      <transition name="slide" :duration="{enter:1000,leave:3000}">
+        <div  >box</div>
+      </transition>
+      <transition 
+      @before-enter='handleEnter'
+      @enter='handleActive'
+      @after-enter='handleAfter'
+      @before-leave=el
+      @leave=el,done
+      @leave-after=el
+      >
+        <div v-if="show" >box</div>
+      </transition>
+      <button @click='handleClick'>change</button>
+      `
+
+    }).mount('#root')
+  </script>
+</body>
+
+</html>

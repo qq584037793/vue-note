@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>lesson</title>
+  <script src="https://unpkg.com/vue@next"></script>
+</head>
+
+<body>
+  <div id="root"></div>
+
+  <script>
+    // ref 获取dom 和组件函数
+    // 孙子组件 传参数 provide / inject
+    const app = Vue.createApp({
+      data() {
+        return {
+          count: 1
+        }
+      },
+      provide: {
+        count: 1
+      },
+      mounted() {
+        console.log(this.$refs.count.innerHTML);
+      },
+      template: `
+      <div ref='count'>ref</div>
+        <child/>
+        <child-child/>
+      `
+    });
+
+    app.component('child', {
+      template: `
+      <div>
+       <div>content</div>
+      </div>
+      `
+    });
+    app.component('child-child', {
+      inject: ['count'],
+      template: `
+      <div>
+       {{count}}
+      </div>
+      `
+    });
+
+    app.mount('#root')
+  </script>
+</body>
+
+</html>

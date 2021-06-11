@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>lesson</title>
+  <script src="https://unpkg.com/vue@next"></script>
+  <style>
+    .header {
+      position: absolute;
+    }
+  </style>
+</head>
+
+<body>
+  <div id="root"></div>
+
+  <script>
+    // context
+    const app = Vue.createApp({
+      data() {
+        return {}
+      },
+      methods: {
+        handleClick() {
+          console.log(1);
+        }
+      },
+      template: `
+      <child app='app' @change='handleClick'>
+        parent
+      </child>`,
+
+    });
+
+    app.component('child', {
+      template: `<div @click='cClick'>123</div>`,
+      setup(props, context) {
+        const {
+          h
+        } = Vue;
+        const {
+          attrs,
+          slots,
+          emit
+        } = context;
+        console.log(attrs.app); // no-props 属性
+        console.log(slots.default());
+        console.log(emit);
+
+        function cClick() {
+          emit('change')
+        }
+        return {
+          cClick
+        }
+        // return () => h('div', {}, slots.default())
+
+      }
+    })
+
+
+    app.mount('#root')
+  </script>
+</body>
+
+</html>

@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>lesson</title>
+  <script src="https://unpkg.com/vue@next"></script>
+  <style>
+    .multiple-enter-active,
+    .multiple-leave-active {
+      transition: all ease 1s;
+    }
+
+    .multiple-enter-to,
+    .multiple-leave-from {
+      opacity: 1;
+    }
+
+    .multiple-enter-from,
+    .multiple-leave-to {
+      opacity: 0;
+    }
+
+
+    @keyframes slide {
+      0% {
+        transform: translateX(100px);
+      }
+
+      100% {
+        transform: translateX(0px);
+      }
+    }
+
+    .push-enter-active,
+    .push-leave-active {
+      animation: slide ease 1s;
+    }
+
+    .push-enter-to,
+    .push-leave-from {
+      opacity: 1;
+    }
+
+    .push-enter-from,
+    .push-leave-to {
+      opacity: 0;
+    }
+
+    .push-move {
+      transition: all 1s;
+    }
+  </style>
+</head>
+
+<body>
+  <div id="root"></div>
+
+  <script>
+    // transition-group  & v-move  & 多组件切换动画
+    const hello = {
+      template: `
+      <div>hello world</div>
+      `
+    }
+
+    const bye = {
+      template: `
+      <div>bye world</div>
+      `
+    }
+    const app = Vue.createApp({
+      data() {
+        return {
+          show: true,
+          component: "hello",
+          list: [1, 2, 3],
+          num: 1
+        }
+      },
+      methods: {
+        handleClick() {
+          this.component === "hello" ? this.component = "bye" : this.component = "hello"
+        },
+        handlePush() {
+          this.list.push(this.list.length + 1)
+        }
+      },
+      components: {
+        hello,
+        bye
+      },
+      template: `
+      <transition name='multiple'  mode='out-in' appear>
+        <component :is='component'/>
+      </transition>
+      <button @click='handleClick'>change</button>
+      <transition-group name='push'>
+        <div v-for="(item,index) in list" :key='index'>{{item}}</div>
+      </transition-group>
+      <button @click='handlePush'>add</button>
+
+
+
+      `
+    });
+    app.mount('#root')
+  </script>
+</body>
+
+</html>

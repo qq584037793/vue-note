@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>lesson</title>
+  <script src="https://unpkg.com/vue@next"></script>
+  <style>
+  </style>
+</head>
+
+<body>
+  <div id="root"></div>
+
+
+  <script>
+    // list check demo
+    const app = Vue.createApp({
+      data() {
+        return {
+          name: 'tony',
+          age: 22
+        }
+      },
+      rules: {
+        age: {
+          validate: age => age > 25,
+          msg: 'too young'
+        },
+        name: {
+          validate: name => name.length > 4,
+          msg: 'short'
+        }
+      },
+      template: `
+      <div>name:{{name}},age:{{age}}</div>
+        `
+
+    });
+
+    const myPlugins = (app, options) => {
+      app.mixin({
+        created() {
+          const list = this.$options.rules
+          for (let item in list) {
+            const key = list[item]
+            this.$watch(item, (value) => {
+              const result = key.validate(value);
+              if (!result) console.log(key.msg);
+            })
+          }
+        }
+      })
+    }
+
+
+    app.use(myPlugins)
+
+    const vm = app.mount('#root')
+  </script>
+</body>
+
+</html>

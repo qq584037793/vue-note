@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>lesson</title>
+  <script src="https://unpkg.com/vue@next"></script>
+</head>
+
+<body>
+  <div id="root"></div>
+
+  <script>
+    // 在某个时刻自动执行
+    Vue.createApp({
+      data() {
+        return {
+          message: 'hello world'
+        }
+      },
+      methods: {
+        add() {
+          this.message = 'upData'
+        }
+      },
+      // vue 3.0
+      // 等于 beforeCreate 和 created 
+      setup() {
+        // console.log('setup')
+
+        // onBeforeMount(() => {
+        //   console.log('onBeforeMount')
+        // })
+        // onMounted(() => {
+        //   console.log('onMounted')
+        // })
+        // onBeforeUpdate(() => {
+        //   console.log('onBeforeUpdate')
+        // })
+        // onUpdated(() => {
+        //   console.log('onUpdated')
+        // })
+        // onBeforeUnmount(() => {
+        //   console.log('onBeforeUnmount')
+        // })
+        // onUnmounted(() => {
+        //   console.log('onUnmounted')
+        // })
+      },
+      // 在实例生成之前自动执行的函数
+      beforeCreate() {
+        console.log('Init&events&lifecycle');
+      },
+      // 在实例生成之后自动执行的函数
+      created() {
+        console.log('Init&injection&reactivity');
+      },
+      // 在模版编译成render函数之后自动执行的函数(组件内容渲染到页面之前)
+      beforeMount() {
+        console.log(document.getElementById('root').innerHTML);
+        console.log('if has template then compile template into render function ');
+      },
+      // 组件内容渲染到页面之后自动执行的函数
+      mounted() {
+        console.log(document.getElementById('root').innerHTML);
+        console.log('create app.$el and replace "el" with it ');
+      },
+      // 当data变化之后自动执行的函数
+      beforeUpdate() {
+        console.log(document.getElementById('root').innerHTML);
+        console.log('beforeUpdate');
+      },
+      // 在data变化之后同时页面完成渲染之后自动执行的函数
+      updated() {
+        console.log(document.getElementById('root').innerHTML);
+        console.log('Update');
+      },
+      // vue 3.0 beforeDestroy 改名
+      // vue 应用失效 之后自动执行的函数
+      beforeUnmount() {
+        console.log('beforeUnmount');
+      },
+      // //  vue 3.0  destroyed 改名
+      // vue 应用失效 且dom完全销毁之后自动执行的函数
+      unmounted() {
+        console.log('unmounted');
+      },
+      template: `
+      <div>{{message}}</div>
+      <button @click=add>change</button>`
+    }).mount('#root')
+  </script>
+</body>
+
+</html>

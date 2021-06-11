@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>lesson</title>
+  <script src="https://unpkg.com/vue@next"></script>
+  <style>
+  </style>
+</head>
+
+<body>
+  <div id="root"></div>
+
+
+  <script>
+    // render function
+    // template => reader => h => Virtual DOM => dom => page
+
+    //plugin 通用插件 把通用性功能封装
+    const myPlugins = {
+      install(app, options) {
+        app.config.globalProperties.$sayHello = 'hello world'
+      }
+    }
+
+    const app = Vue.createApp({
+      template: `
+        <title1 :level="1">
+        hello
+        </title1>
+        `
+
+    });
+
+    //   <h1>hello
+    //     <h3>hello
+    //       <h6>hello</h6>
+    //     </h3>
+    //   </h1>
+
+
+    app.component('title1', {
+      props: ['level'],
+      render() {
+        const {
+          h
+        } = Vue;
+        return h('h' + this.level, {}, [this.$slots.default(), h('h3', {}, ['hello', h('h6', {}, 'hello')])])
+      },
+      mounted() {
+        console.log(this.$sayHello)
+      },
+    });
+
+
+    app.use(myPlugins)
+
+    app.mount('#root')
+  </script>
+</body>
+
+</html>

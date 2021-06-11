@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>lesson</title>
+  <script src="https://unpkg.com/vue@next"></script>
+</head>
+
+<body>
+  <div id="root"></div>
+
+  <script>
+    // data & methods & computed & watcher
+    Vue.createApp({
+      data() {
+        return {
+          count: 2,
+          price: 5,
+          newTotal: 10,
+        }
+      },
+      //计算属性　算術プロパティ  缓存(キャッシュ)
+      // 依赖发生变化才会重新计算
+      computed: {
+        total() {
+          return this.count * this.price
+        }
+      },
+      // 监听数据变化(异步)
+      watch: {
+        price(current, prev) {
+          this.newTotal = current * this.count
+        }
+      },
+      methods: {
+        // 页面渲染之后重新计算
+        getTotal() {
+          return this.count * this.price
+        },
+        add2() {
+          this.price += 2
+        }
+      },
+      template: `
+      <div>{{count}}</div>
+      <div>{{price}}</div>
+      <div>{{newTotal}}</div>
+      <button @click='add2'>+2</button>
+      `
+
+    }).mount('#root')
+  </script>
+</body>
+
+</html>

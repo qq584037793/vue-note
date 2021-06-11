@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>lesson1</title>
+  <script src="https://unpkg.com/vue@next"></script>
+</head>
+
+<body>
+  <div id="root"></div>
+  <script>
+    // v-show  &  v-if & v-else& v-on( @ ) & v-once & v-html
+    // mvvm设计 m => model 数据 v => view 视图vm => viewModel  视图数据连接层
+    Vue.createApp({
+      data() {
+        return {
+          num: 1,
+          content1: '需要频繁切换 v-show 较好',
+          content2: '运行时条件不大可能改变 v-if 较好。',
+          visible: true,
+          visible1: true,
+          message: '<strong>hello</strong>',
+          message1: 'v-once'
+        }
+      },
+      methods: {
+        handleStart() {
+          clearInterval(this.timer)
+          this.timer = setInterval(() => {
+            this.num += 1
+          }, 100)
+        },
+        handleEnd() {
+          clearInterval(this.timer)
+        },
+        handleReverse() {
+          this.content = this.content.split('').reverse().join('')
+        },
+        handleShow() {
+          this.visible = !this.visible
+        }
+      },
+      template: `<div>{{num}}</div>
+      <button @click='handleStart'>Start</button>
+      <button @click='handleEnd'>End</button>
+      <div>
+      <div v-show='visible'>{{content1}}</div>
+      <button @click='handleReverse' >reverse</button>
+      <button @click='handleShow' >show/hide</button>
+      </div>
+      <div>
+      <div v-if='visible'>{{content2}}</div>
+      <div v-else-if='visible1'>{{content2}}</div>
+      <div v-else>else</div>
+      <button @click='handleShow' >show/hide</button>
+      <div v-html='message'></div>
+      <div v-once>{{message1}}一旦渲染就无法更改</div>
+      <button @click='handleShow' >show/hide</button>
+      </div>`
+    }).mount('#root');
+  </script>
+</body>
+
+</html>

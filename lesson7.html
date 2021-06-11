@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>lesson</title>
+  <script src="https://unpkg.com/vue@next"></script>
+</head>
+
+<body>
+  <div id="root"></div>
+
+  <script>
+    // input, textarea, checkbox, radio, select
+    // 修饰符 lazy(blue事件), number, trim
+    Vue.createApp({
+      data() {
+        return {
+          message1: 1,
+          message: [],
+          checkbox1: [],
+          radio1: '',
+          options: [{
+              text: '1',
+              value: {
+                value: 'A'
+              }
+            },
+            {
+              text: '2',
+              value: {
+                value: 'B'
+              }
+            },
+            {
+              text: '3',
+              value: {
+                value: 'C'
+              }
+            }
+          ]
+        }
+      },
+      template: `
+      <div>
+        {{message1}}<input type="checkbox" v-model='message1' true-value='1' false-value='2'/>
+      </div>
+
+      <div>{{checkbox1}}
+        1<input type="checkbox" v-model='checkbox1' value='1'/>
+        2<input type="checkbox" v-model='checkbox1' value='2'/>
+        3<input type="checkbox" v-model='checkbox1' value='3'/>
+      </div>
+      <div>{{radio1}}
+        1<input type="radio" v-model='radio1' value='1'/>
+        2<input type="radio" v-model='radio1' value='2'/>
+        3<input type="radio" v-model='radio1' value='3'/>
+      </div>
+      <div>{{message}}
+        <select v-model='message' multiple>
+          <option v-for="item in options" :value="item.value">{{item.text}}</option>
+        </select>
+      </div>
+      `
+
+    }).mount('#root')
+  </script>
+</body>
+
+</html>

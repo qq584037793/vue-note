@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>lesson2</title>
+  <script src="https://unpkg.com/vue@next"></script>
+</head>
+
+<body>
+  <div id="root"></div>
+
+  <script>
+    // {{}} 插值表达式
+    // v-for & v-bind(:) & props & click.prevent
+    const app = Vue.createApp({
+      data() {
+        return {
+          list: [],
+          inputVal: '',
+          name: 'title',
+          event: 'click' //动态参数
+        }
+      },
+      methods: {
+        handleAdd() {
+          this.list.push(this.inputVal)
+          this.inputVal = ''
+        },
+        handleClick() {
+          alert('click')
+        }
+      },
+      template: `
+      <div>
+        <input v-model='inputVal'/>
+        <button @[event]='handleAdd' :[name]='inputVal'>add</button>
+        <ul>
+        <todo-item v-for="item,index of list" :content='item'></todo-item>
+      </ul>
+      <form action='https://www.baidu.com' @click.prevent='handleClick'>
+        <button type='submit'> submit </button>
+      </form>
+      </div>`
+    });
+    app.component('todo-item', {
+      props: ['content'],
+      template: `
+      <li>{{content}}</li>
+      `
+    });
+    app.mount('#root')
+  </script>
+</body>
+
+</html>

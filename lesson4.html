@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>lesson</title>
+  <script src="https://unpkg.com/vue@next"></script>
+  <style>
+    /* @keyframes leftToRight {
+      0% {
+        transform: translateX(-100px)
+      }
+
+      50% {
+        transform: translateX(-50px)
+      }
+
+      0% {
+        transform: translateX(0px)
+      }
+    }
+
+    .box1 {
+      animation: leftToRight 3s;
+    } */
+
+    .transition {
+      transition: background-color ease 1s;
+    }
+
+    .green {
+      background: green;
+    }
+
+    .red {
+      background: red;
+    }
+  </style>
+</head>
+
+<body>
+  <div id="root"></div>
+
+  <script>
+    Vue.createApp({
+      data() {
+        return {
+          animate: {
+            transition: true,
+            green: true,
+            red: false
+          }
+        }
+      },
+      methods: {
+        handleAnimation() {
+          this.animate.green = !this.animate.green
+          this.animate.red = !this.animate.red
+        }
+      },
+      template: `
+      <div :class="animate">box</div>
+      <button @click='handleAnimation'>change</button>
+      `
+
+    }).mount('#root')
+  </script>
+</body>
+
+</html>
